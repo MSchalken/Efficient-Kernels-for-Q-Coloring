@@ -8,8 +8,8 @@ import itertools
 
 # Step 1: generate terms for X, all possible terms of the polynomial
 # Inluding constant term, we have 175 terms for q=3
-q = 5
-nodes = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'}
+q = 3
+nodes = {'a', 'b', 'c', 'd'}
 colors = range(1, q+1)
 max_degree = (2 * q) - 3
 
@@ -26,8 +26,8 @@ print("Generating bad configs")
 bad_configs = np.array([])
 for c1 in itertools.permutations(colors, q-1):
     for c2 in itertools.permutations(c1, q-1):
-        config = {'a': c1[0], 'b': c1[1], 'c': c1[2], 'd': c1[3],
-                  'e': c2[0], 'f': c2[1], 'g': c2[2], 'h': c2[3]}
+        config = {'a': c1[0], 'b': c1[1],
+                  'c': c2[0], 'd': c2[1]}
         bad_configs = np.append(bad_configs, config)
 print(str(len(bad_configs)) + " bad configs generated")
 
@@ -35,8 +35,7 @@ print("Generating all configs and filtering bad configs")
 # Step 1.5: generate all possible 'good' configs
 good_configs = np.array([])
 for c in itertools.product(colors, repeat=(2*(q-1))):
-    config = {'a': c[0], 'b': c[1], 'c': c[2], 'd': c[3],
-              'e': c[4], 'f': c[5], 'g': c[6], 'h': c[7]}
+    config = {'a': c[0], 'b': c[1], 'c': c[2], 'd': c[3]}
     if config not in bad_configs:
         good_configs = np.append(good_configs, config)
 print(str(len(good_configs)) + " good configs generated")
